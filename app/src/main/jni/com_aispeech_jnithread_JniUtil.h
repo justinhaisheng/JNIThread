@@ -31,6 +31,12 @@ JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_normalThread
 JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_mutexThread
   (JNIEnv *, jobject);
 
+
+
+
+JNIEXPORT void JNICALL
+Java_com_aispeech_jnithread_JniUtil_callbackFromC(JNIEnv *, jobject );
+
 #ifdef __cplusplus
 }
 #endif

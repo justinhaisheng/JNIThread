@@ -3,6 +3,7 @@ package com.aispeech.jnithread;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mJniUtil.setOnErrerListener(new JniUtil.OnErrerListener() {
+            @Override
+            public void onError(int code, String msg) {
+                Toast.makeText(MainActivity.this,""+msg,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void normal(View view){
@@ -36,6 +42,6 @@ public class MainActivity extends AppCompatActivity {
     *@time 2019/12/20 20:17
     */
     public void calbackThread(View view){
-
+        mJniUtil.callbackFromC();
     }
 }

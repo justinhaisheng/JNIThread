@@ -24,6 +24,8 @@ public class JniUtil {
     //子线程调用
     public native void mutexThread();
 
+    public native  void callbackFromC();
+
     private OnErrerListener onErrerListener;
 
     public void setOnErrerListener(OnErrerListener onErrerListener) {

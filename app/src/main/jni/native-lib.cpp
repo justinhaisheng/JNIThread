@@ -4,11 +4,9 @@
 #include "queue" //队列
 #include "unistd.h" //休眠
 
+#include "JavaListener.h"
 
-#include <android/log.h>
 
-#define LOGD(FORMAT,...) __android_log_print(ANDROID_LOG_DEBUG, "haisheng", FORMAT, ##__VA_ARGS__);
-#define LOGE(FORMAT,...) __android_log_print(ANDROID_LOG_ERROR, "haisheng", FORMAT, ##__VA_ARGS__);
 
 extern "C"
 JNIEXPORT jstring JNICALL Java_com_aispeech_jnithread_JniUtil_stringFromJNI
@@ -94,4 +92,31 @@ JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_mutexThread
    pthread_create(&product_t,NULL,producCallback,NULL);
    pthread_create(&custom_t,NULL,customCallback,NULL);
 
+}
+
+
+
+JavaVM *jvm;
+
+JavaListener *javaListener;
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_aispeech_jnithread_JniUtil_callbackFromC(JNIEnv *env, jobject thiz) {
+    // TODO: implement callbackFromC()
+    javaListener = new JavaListener(jvm, env, env->NewGlobalRef(thiz));
+    javaListener->onError(1, 100, "c++ call java meid from main thread!");
+
+}
+
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void* reserved)
+{
+    JNIEnv *env;
+    jvm = vm;
+    if(vm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK)
+    {
+        return -1;
+    }
+    return JNI_VERSION_1_6;
 }
