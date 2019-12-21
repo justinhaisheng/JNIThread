@@ -22,8 +22,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="C++调用Java方法"
+        android:text="主线程中C++调用Java方法"
         android:onClick="calbackThread"/>
 
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="子线程中C++调用Java方法"
+        android:onClick="subCalbackThread"/>
 </LinearLayout>

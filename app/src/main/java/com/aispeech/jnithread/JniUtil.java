@@ -26,6 +26,8 @@ public class JniUtil {
 
     public native  void callbackFromC();
 
+    public native void subCalbackThread();
+
     private OnErrerListener onErrerListener;
 
     public void setOnErrerListener(OnErrerListener onErrerListener) {

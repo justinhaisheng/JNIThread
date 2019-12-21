@@ -38,9 +38,20 @@ void JavaListener::onError(int type, int code, const char *msg) {
     }else{
         JNIEnv *env;
         jvm->AttachCurrentThread(&env,0);
+        LOGD("onError4");
         jstring  jmsgj = env->NewStringUTF(msg);
         env->CallVoidMethod(this->jobj,this->jmid,code,jmsgj);
-        jenv->DeleteLocalRef(jmsgj);
+        env->DeleteLocalRef(jmsgj);
+        LOGD("onError5");
         jvm->DetachCurrentThread();
+        LOGD("onError6");
     }
+}
+
+JavaListener::~JavaListener(){
+    LOGD("析构函数");
+
+
+
+
 }

@@ -17,8 +17,14 @@ public class MainActivity extends AppCompatActivity {
 
         mJniUtil.setOnErrerListener(new JniUtil.OnErrerListener() {
             @Override
-            public void onError(int code, String msg) {
-                Toast.makeText(MainActivity.this,""+msg,Toast.LENGTH_SHORT).show();
+            public void onError(int code, final String msg) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this,""+msg,Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
     }
@@ -43,5 +49,9 @@ public class MainActivity extends AppCompatActivity {
     */
     public void calbackThread(View view){
         mJniUtil.callbackFromC();
+    }
+
+    public void subCalbackThread(View view){
+        mJniUtil.subCalbackThread();
     }
 }

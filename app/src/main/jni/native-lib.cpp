@@ -100,13 +100,38 @@ JavaVM *jvm;
 
 JavaListener *javaListener;
 
+pthread_t jlistener_t;
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_aispeech_jnithread_JniUtil_callbackFromC(JNIEnv *env, jobject thiz) {
     // TODO: implement callbackFromC()
     javaListener = new JavaListener(jvm, env, env->NewGlobalRef(thiz));
     javaListener->onError(1, 100, "c++ call java meid from main thread!");
+    delete(javaListener);
+    javaListener = NULL;
+}
 
+int* ret_val ;
+void* post_thread(void* data){
+    LOGD("post_thread ");
+    JavaListener* listener = static_cast<JavaListener *>(data);
+    LOGD("post_thread1 ");
+    listener->onError(0,200,"c++ call java meid from sub thread!");
+    LOGD("post_thread2 ");
+
+    pthread_exit(&jlistener_t);
+
+}
+
+extern "C"
+JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_subCalbackThread
+        (JNIEnv *env, jobject job){
+    javaListener = new JavaListener(jvm, env, env->NewGlobalRef(job));
+    pthread_create(&jlistener_t,NULL,post_thread,javaListener);
+    pthread_join(jlistener_t, NULL);
+    LOGD("Java_com_aispeech_jnithread_JniUtil_subCalbackThread");
+    delete(javaListener);
 }
 
 
