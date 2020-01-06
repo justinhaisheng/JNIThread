@@ -1,4 +1,4 @@
-#include "com_aispeech_jnithread_JniUtil.h"
+#include "com_aispeech_jnithread_ndk_PthreadUtil.h"
 #include <pthread.h>
 
 #include "queue" //队列
@@ -9,7 +9,7 @@
 
 
 extern "C"
-JNIEXPORT jstring JNICALL Java_com_aispeech_jnithread_JniUtil_stringFromJNI
+JNIEXPORT jstring JNICALL Java_com_aispeech_jnithread_ndk_PthreadUtil_stringFromJNI
         (JNIEnv *env, jobject job){
 
 }
@@ -25,7 +25,7 @@ void* normalCallBack(void* data){
 
 
 extern "C"
-JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_normalThread
+JNIEXPORT void JNICALL Java_com_aispeech_jnithread_ndk_PthreadUtil_normalThread
         (JNIEnv *env, jobject job){
     pthread_create(&t,NULL,normalCallBack,NULL);
 }
@@ -77,7 +77,7 @@ void *customCallback(void *data)
 
 
 extern "C"
-JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_mutexThread
+JNIEXPORT void JNICALL Java_com_aispeech_jnithread_ndk_PthreadUtil_mutexThread
         (JNIEnv *env, jobject job){
 
     for(int i = 0; i < 10; i++)
@@ -104,7 +104,7 @@ pthread_t jlistener_t;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_aispeech_jnithread_JniUtil_callbackFromC(JNIEnv *env, jobject thiz) {
+Java_com_aispeech_jnithread_ndk_PthreadUtil_callbackFromC(JNIEnv *env, jobject thiz) {
     // TODO: implement callbackFromC()
     javaListener = new JavaListener(jvm, env, env->NewGlobalRef(thiz));
     javaListener->onError(1, 100, "c++ call java meid from main thread!");
@@ -125,12 +125,12 @@ void* post_thread(void* data){
 }
 
 extern "C"
-JNIEXPORT void JNICALL Java_com_aispeech_jnithread_JniUtil_subCalbackThread
+JNIEXPORT void JNICALL Java_com_aispeech_jnithread_ndk_PthreadUtil_subCalbackThread
         (JNIEnv *env, jobject job){
     javaListener = new JavaListener(jvm, env, env->NewGlobalRef(job));
     pthread_create(&jlistener_t,NULL,post_thread,javaListener);
     pthread_join(jlistener_t, NULL);
-    LOGD("Java_com_aispeech_jnithread_JniUtil_subCalbackThread");
+    LOGD("Java_com_aispeech_jnithread_PthreadUtil_subCalbackThread");
     delete(javaListener);
 }
 

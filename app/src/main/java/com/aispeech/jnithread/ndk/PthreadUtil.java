@@ -1,11 +1,11 @@
-package com.aispeech.jnithread;
+package com.aispeech.jnithread.ndk;
 
 /**
  * @创建者 luhaisheng
  * @创建时间 2019/12/20 20:07
  * @描述
  */
-public class JniUtil {
+public class PthreadUtil {
 
     // Used to load the 'native-lib' library on application startup.
     static {

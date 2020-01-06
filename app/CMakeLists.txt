@@ -11,15 +11,27 @@ cmake_minimum_required(VERSION 3.4.1)
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-             native-lib
+        native-lib
 
-             # Sets the library as a shared library.
-             SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-             # Provides a relative path to your source file(s).
+        # Provides a relative path to your source file(s).
         src/main/jni/native-lib.cpp
-        src/main/jni/JavaListener.cpp)
+        src/main/jni/JavaListener.cpp
+        src/main/jni/parcel_util.cpp
+        src/main/jni/Parcel.cpp)
 
+#add_library( # Sets the name of the library.
+#        parcel-lib
+#
+#        # Sets the library as a shared library.
+#        SHARED
+#
+#        # Provides a relative path to your source file(s).
+#        src/main/jni/parcel_util.cpp
+#        src/main/jni/Parcel.cpp
+#        )
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
 # default, you only need to specify the name of the public NDK library
@@ -39,7 +51,7 @@ find_library( # Sets the name of the path variable.
 
 target_link_libraries( # Specifies the target library.
                        native-lib
-
+                       #parcel_lib
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )
